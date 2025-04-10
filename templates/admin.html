@@ -28,7 +28,12 @@
 
     <h2>Mensajes existentes</h2>
     {% for categoria, mensajes in mensajes.items() %}
-        <h3>{{ categoria }}</h3>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <h3 style="margin: 0;">{{ categoria }}</h3>
+            <form method="POST" action="{{ url_for('eliminar_categoria', categoria_nombre=categoria) }}">
+                <button type="submit" style="color: red; border: none; background: none; cursor: pointer;" onclick="return confirm('¿Eliminar esta categoría y todos sus mensajes?')">🗑️</button>
+            </form>
+        </div>
         <ul>
             {% for msg in mensajes %}
                 <li>
@@ -44,6 +49,6 @@
             {% endfor %}
         </ul>
     {% endfor %}
-    
+
 </body>
 </html>

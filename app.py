@@ -10,7 +10,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS categorias (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL
+            nombre TEXT NOT NULL UNIQUE
         )
     ''')
     cursor.execute('''
@@ -91,6 +91,27 @@ def eliminar_mensaje(id):
     cursor = conn.cursor()
     cursor.execute('DELETE FROM mensajes WHERE id = ?', (id,))
     conn.commit()
+    conn.close()
+    return redirect(url_for('admin'))
+
+@app.route('/eliminar_categoria/<categoria_nombre>', methods=['POST'])
+def eliminar_categoria(categoria_nombre):
+    conn = sqlite3.connect('mensajes.db')
+    cursor = conn.cursor()
+
+    # Buscar categoría por nombre
+    cursor.execute('SELECT id FROM categorias WHERE nombre = ?', (categoria_nombre,))
+    result = cursor.fetchone()
+
+    if result:
+        categoria_id = result[0]
+
+        # Eliminar mensajes asociados
+        cursor.execute('DELETE FROM mensajes WHERE categoria_id = ?', (categoria_id,))
+        # Eliminar la categoría
+        cursor.execute('DELETE FROM categorias WHERE id = ?', (categoria_id,))
+        conn.commit()
+
     conn.close()
     return redirect(url_for('admin'))
 
