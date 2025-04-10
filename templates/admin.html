@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - CopiChat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Administrador</h1>
+
+    <h2>Crear nueva categoría</h2>
+    <form method="POST">
+        <input type="text" name="nueva_categoria" placeholder="Nombre de categoría" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <h2>Agregar mensaje</h2>
+    <form method="POST">
+        <select name="categoria_id" required>
+            {% for id, nombre in categorias %}
+                <option value="{{ id }}">{{ nombre }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="etiqueta" placeholder="Etiqueta" required>
+        <input type="text" name="contenido" placeholder="Mensaje completo" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <h2>Mensajes existentes</h2>
+    {% for categoria, mensajes in mensajes.items() %}
+        <h3>{{ categoria }}</h3>
+        <ul>
+            {% for msg in mensajes %}
+                <li>
+                    <form method="POST" action="{{ url_for('editar_mensaje', id=msg[0]) }}" style="display:inline;">
+                        <input type="text" name="etiqueta" value="{{ msg[2] }}" required>
+                        <input type="text" name="contenido" value="{{ msg[3] }}" required>
+                        <button type="submit">Editar</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('eliminar_mensaje', id=msg[0]) }}" style="display:inline;">
+                        <button type="submit" onclick="return confirm('¿Eliminar este mensaje?')">Eliminar</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    
+</body>
+</html>

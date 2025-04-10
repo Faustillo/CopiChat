@@ -1,0 +1,41 @@
+body {
+    font-family: sans-serif;
+    margin: 2rem;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #444;
+}
+
+form {
+    margin-bottom: 1.5rem;
+}
+
+input, select, button {
+    padding: 0.5rem;
+    margin: 0.3rem;
+    font-size: 1rem;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.mensajes button {
+    margin: 0.4rem;
+    background-color: #2196F3;
+}
+
+.mensajes button:hover {
+    background-color: #0b7dda;
+}

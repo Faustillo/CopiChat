@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuario - CopiChat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function copiarTexto(texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("Copiado: " + texto);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Mensajes Rápidos</h1>
+
+    {% for categoria, mensajes in mensajes.items() %}
+        <h2>{{ categoria }}</h2>
+        <div class="mensajes">
+            {% for msg in mensajes %}
+                <button onclick="copiarTexto('{{ msg[3] }}')">{{ msg[2] }}</button>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</body>
+</html>
